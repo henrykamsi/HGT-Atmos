@@ -393,6 +393,21 @@
                 alert('PWA Core is active or your current system environment bypasses immediate automated prompts. To pin HGT ATMOS directly to your home screen menu, tap your browser control settings (three dots icon) and hit "Add to Home screen" manually.');
             }
         }
-    </script>
+    <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('Service Worker Registered'));
+  }
+
+  // This handles the Install Prompt
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // You can now show a button in your UI that calls deferredPrompt.prompt();
+    console.log('App is ready to be installed!');
+  });
+</script>
+
 </body>
 </html>
