@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HGT ATMOS Ecosystem Terminal</title>
     <link rel="manifest" href="manifest.json">
-    
+    <meta name="google-site-verification" content="ZxvYybyg9963-ltKszRxcviAPkYag5UuGqjlJLMqtww" />
+
+    <!-- OneSignal SDK -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
       window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -13,78 +15,73 @@
         await OneSignal.init({ appId: "d6be9fc9-9009-480a-b590-5dbf4ec84300" });
       });
     </script>
-    
+
     <style>
-        /* Keep your existing style architecture */
         :root { --bg-color: #0A192F; --sidebar-color: #112240; --accent-color: #64FFDA; --text-main: #FFFFFF; --text-muted: #8892B0; --card-bg: #172A45; }
-        [data-theme="light"] { --bg-color: #F4F6F9; --sidebar-color: #FFFFFF; --accent-color: #0070F3; --text-main: #1E293B; --text-muted: #64748B; --card-bg: #FFFFFF; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-family: -apple-system, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
         .top-bar { background-color: var(--sidebar-color); padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--accent-color); }
         .drawer { position: fixed; top: 0; left: -320px; width: 320px; height: 100%; background: var(--sidebar-color); z-index: 999; padding: 20px; transition: 0.3s; border-right: 2px solid var(--accent-color); overflow-y: auto; }
         .drawer.open { left: 0; }
-        .menu-item { display: block; width: 100%; padding: 12px; margin: 6px 0; background: rgba(100, 255, 218, 0.05); color: var(--text-main); border: 1px solid rgba(100, 255, 218, 0.2); cursor: pointer; border-radius: 4px; font-size: 13px; text-align: left; }
+        .menu-category { color: var(--accent-color); font-size: 11px; text-transform: uppercase; margin: 20px 0 10px 0; font-weight: bold; }
+        .menu-item { display: block; width: 100%; padding: 12px; margin: 6px 0; background: rgba(23, 42, 69, 0.5); color: var(--text-main); border: 1px solid rgba(100, 255, 218, 0.2); cursor: pointer; text-align: left; border-radius: 4px; font-size: 13px; }
         .display-card { background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid rgba(100, 255, 218, 0.1); margin-top: 15px; }
-        .btn-action { background: var(--accent-color); color: var(--bg-color); border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        <button onclick="toggleMenu(true)" style="background:none; border:1px solid var(--accent-color); color:var(--accent-color); padding:8px;">☰ CONTROL TERMINAL</button>
+        <button onclick="document.getElementById('menuDrawer').classList.add('open')" style="background:none; border:1px solid var(--accent-color); color:var(--accent-color); padding:8px;">☰ CONTROL TERMINAL</button>
         <span style="font-weight:bold;">HGT ATMOS v2.0</span>
-        <button onclick="toggleTheme()" style="background:var(--accent-color); border:none; padding:8px;">🌓 MODE</button>
+        <button onclick="/* Add your theme toggle here */" style="background:var(--accent-color); border:none; padding:8px;">🌓 MODE</button>
     </div>
 
     <div id="menuDrawer" class="drawer">
-        <button onclick="toggleMenu(false)" style="float:right; background:none; border:none; color:red; font-size:24px;">×</button>
+        <button onclick="document.getElementById('menuDrawer').classList.remove('open')" style="float:right; color:red; background:none; border:none; font-size:24px;">×</button>
         <div style="margin-top:50px;">
+            <div class="menu-category">🌐 Core Weather Interface</div>
             <button class="menu-item" onclick="initiateGPSFetch()">01. Automated GPS Terminal</button>
+            <button class="menu-item" onclick="loadFeature('search')">02. Manual Registry Search</button>
+            <button class="menu-item" onclick="loadFeature('alerts')">03. Severe Alerts Banner</button>
+            
+            <div class="menu-category">📈 Advanced Trading & Monthly Nodes</div>
             <button class="menu-item" onclick="loadFeature('signals')">04. Live Macro Trading Signals</button>
             <button class="menu-item" onclick="loadFeature('monthly')">05. Monthly Profit Analytics</button>
             <button class="menu-item" onclick="loadFeature('trends')">06. Global Commodity Trends</button>
-            <button class="menu-item" onclick="loadFeature('legal')">11. Legal & Privacy</button>
+            
+            <div class="menu-category">📰 Insights & Localization</div>
+            <button class="menu-item" onclick="loadFeature('blog')">07. HGT Climate Insights</button>
+            <button class="menu-item" onclick="loadFeature('lang')">08. Dialect Switcher</button>
+            
+            <div class="menu-category">🏢 Governance & Utilities</div>
+            <button class="menu-item" onclick="loadFeature('pwa')">09. System PWA Installer</button>
+            <button class="menu-item" onclick="loadFeature('corp')">10. HGT Corporate Registry</button>
+            <button class="menu-item" onclick="loadFeature('legal')">11. Legal Compliance Vault</button>
         </div>
     </div>
 
     <div style="padding:20px; max-width:800px; margin:auto;">
         <h2 id="sectionTitle">Dashboard Node</h2>
         <div id="dynamicContentContainer">
-            </div>
+            <!-- Content will render here -->
+        </div>
     </div>
 
     <script>
-        // CORE ENGINE
-        function toggleMenu(open) { document.getElementById('menuDrawer').classList.toggle('open', open); }
-        function toggleTheme() {
-            const t = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', t);
-            localStorage.setItem('hgtTheme', t);
-        }
-
-        // FEATURE RENDERER (Now includes your analytics)
         function loadFeature(nodeId) {
-            toggleMenu(false);
+            document.getElementById('menuDrawer').classList.remove('open');
             const container = document.getElementById('dynamicContentContainer');
-            const title = document.getElementById('sectionTitle');
-            title.innerText = nodeId.toUpperCase() + " GRID";
-
-            if (nodeId === 'signals') {
-                container.innerHTML = `<div class="display-card"><h3>BTC/USD Analysis</h3><div style="font-size:24px; color:var(--accent-color);">ENTRY: 98,200</div><p>System status: Monitoring volatility levels for potential breakout.</p><button class="btn-action">SIGNAL EXECUTED</button></div>`;
-            } else if (nodeId === 'monthly') {
-                container.innerHTML = `<div class="display-card"><h3>May Profit Analytics</h3><div style="font-size:24px; color:var(--accent-color);">+14.2% Growth</div><p>Compounding active since beginning of cycle.</p></div>`;
-            } else if (nodeId === 'trends') {
-                container.innerHTML = `<div class="display-card"><h3>Global Commodity Trends</h3><div style="font-size:24px; color:var(--accent-color);">Index: STABLE</div><p>Standard freight and material movement detected globally.</p></div>`;
-            } else if (nodeId === 'legal') {
-                container.innerHTML = `<div class="display-card"><h3>Privacy & Compliance</h3><p>We prioritize user-side security. Google AdSense cookies are managed here.</p></div>`;
-            }
+            document.getElementById('sectionTitle').innerText = nodeId.toUpperCase() + " TERMINAL";
+            
+            // Logic to render your professional cards
+            container.innerHTML = `<div class="display-card"><h3>${nodeId.toUpperCase()} DATA</h3><p>Active Node Monitoring: Data stream ready for ${nodeId} analytics.</p></div>`;
         }
 
-        // GPS WEATHER ENGINE (Your Original Functionality)
-        async function initiateGPSFetch() {
-            toggleMenu(false);
+        function initiateGPSFetch() {
+            document.getElementById('menuDrawer').classList.remove('open');
             document.getElementById('sectionTitle').innerText = "WEATHER TERMINAL";
             document.getElementById('dynamicContentContainer').innerHTML = `<div class="display-card">SYNCHRONIZING GPS SENSORS...</div>`;
-            // Keep your existing weather fetch logic here
+            // Re-insert your weather fetch call here
         }
     </script>
 </body>
