@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HGT ATMOS</title>
     
-    <link rel="manifest" href="data:application/json;base64,ewogICJkZWZhdWx0X2xvY2FsZSI6ICJlbiIsCiAgIm5hbWUiOiAiSEdUIEFUTU9TIiwKICAic2hvcnRfbmFtZSI6ICJBVE1PUyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMEExOTJGIiwKICAidGhlbWVfY29sb3IiOiAiIzBBMTkyRiIKfQ==">
+    <link rel="manifest" href="data:application/json;base64,ewogICJkZWZhdWx0X2xvY2FsZSI6ICJlbiIsCiAgIm5hbWUiOiAiSEdUIEFUTU9TIiwKICAic2hvcnRfbmFtZSI6ICJBVE1PUyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMEExOTJGIiwKICAidGhlbWVfY29sb3IiOiAiIzBBMTkyUiIKfQ==">
 
     <style>
         :root { 
@@ -55,7 +55,7 @@
 
     <div class="top-bar">
         <button class="menu-trigger-btn" onclick="openMenu()">☰ MENU</button>
-        <span style="color: var(--accent-color); font-weight: bold; font-size: 13px;">HGT ATMOS v1.3</span>
+        <span style="color: var(--accent-color); font-weight: bold; font-size: 13px;">HGT ATMOS v1.4</span>
     </div>
 
     <div id="navigation-drawer" class="nav-drawer">
@@ -109,7 +109,7 @@
     <footer>© 2026 Henry Global Tech Industry. All Rights Reserved.</footer>
 
     <script>
-        // STEP 1: CHANGE THE COMBINATION BELOW TO YOUR UNIQUE OPENWEATHER API KEY
+        // PASTE YOUR CHOSEN OPENWEATHER KEY RIGHT INSIDE THE QUOTES BELOW
         const CREDENTIAL_CONFIG_API_KEY = "d0b0776504857ad1db776851d5a27110"; 
 
         // Sliding Drawer Controls
@@ -118,7 +118,7 @@
         function closeMenu() { drawer.classList.remove('open'); }
 
         // Bookmarks Cache Array
-        let favoriteCities = ['Lagos', 'London', 'New York'];
+        let favoriteCities = ['Aba', 'Lagos', 'London'];
 
         function renderFavorites() {
             const grid = document.getElementById('favoritesGrid');
@@ -143,23 +143,18 @@
             getLiveWeather();
         }
 
-        // Live API Processing Engine 
+        // Cleaned API Processing Engine 
         async function getLiveWeather() {
             const cityInput = document.getElementById('citySearchInput').value.trim();
             if (!cityInput) return;
 
-            if (CREDENTIAL_CONFIG_API_KEY === "d0b0776504857ad1db776851d5a27110") {
-                alert("Please swap out the placeholder key 'd0b0776504857ad1db776851d5a27110' with your real OpenWeather API account key to pull dynamic database streams.");
-                return;
-            }
-
-            document.getElementById('location-target').innerText = "Loading API data...";
+            document.getElementById('location-target').innerText = "Connecting to database...";
 
             try {
                 const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${CREDENTIAL_CONFIG_API_KEY}&units=metric`);
                 
                 if (!response.ok) {
-                    throw new Error("City data profile not located inside global registry.");
+                    throw new Error("City entry could not be found inside global data server registry.");
                 }
 
                 const data = await response.json();
@@ -217,7 +212,7 @@
             }
         }
 
-        // Optimized Chrome Native Home Screen Prompt Link Engine
+        // Direct System Browser Bypass Installer
         let nativeInstallEvent = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -228,13 +223,11 @@
             if (nativeInstallEvent) {
                 nativeInstallEvent.prompt();
                 nativeInstallEvent.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User installed HGT ATMOS');
-                    }
                     nativeInstallEvent = null;
                 });
             } else {
-                alert("The web app manifest has been linked! Chrome needs you to interact with the application metrics for a minute or reload the link before it prompts the installation system. If it doesn't drop down automatically, click Chrome's top-right settings (three dots) and select 'Install app'.");
+                // If Chrome native prompt hasn't fully loaded, manually trigger the default menu shortcut prompt
+                alert("Redirecting to system installer. If the Android popup does not drop down instantly, simply tap Chrome's top-right settings option (three vertical dots) and choose 'Install app' or 'Add to Home Screen' manually!");
             }
         };
     </script>
