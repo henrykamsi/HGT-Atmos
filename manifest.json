@@ -1,13 +1,20 @@
 {
   "name": "HGT ATMOS Ecosystem Terminal",
   "short_name": "HGT ATMOS",
-  "start_url": "./index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0A192F",
   "theme_color": "#64FFDA",
   "icons": [
-    { "src": "./icon-192.png", "type": "image/png", "sizes": "192x192" },
-    { "src": "./icon-512.png", "type": "image/png", "sizes": "512x512" }
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2698/2698194.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2698/2698194.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
-
